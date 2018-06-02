@@ -1,0 +1,23 @@
+{
+  "name": "randomtools-js",
+  "version": "0.1.0",
+  "description": "Tools for randomizers",
+  "main": "dist/index.js",
+  "keywords": [
+    "randomizer",
+    "game"
+  ],
+  "author": "@pickfifteen",
+  "private": true,
+  "license": "GPL-3.0",
+  "dependencies": {
+    "seedrandom": "^2.4.3"
+  },
+  "scripts": {
+    "build": "babel src --presets babel-preset-env --out-dir dist --source-maps inline"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
+}
