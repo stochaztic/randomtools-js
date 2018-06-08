@@ -542,7 +542,40 @@ class ReadWriteObject {
         console.assert(objs.length === 1);
         return objs[0];
     }
-}
 
+    static existingValues(attribute) {
+        if(this._existingValues === undefined) this._existingValues = {};
+        const key = Array.isArray(attribute) ? attribute.join("__") : attribute;
+        if(this._existingValues[key] !== undefined) return this._existingValues[key];
+
+        this._existingValues[key] = [];
+        const match = other => {
+            if(Array.isArray(attribute)) {
+                return this._existingValues[key].some(v => {
+                    return attribute.every(a => v[a] === other.oldData[a]);
+                });
+            }
+            else {
+                return this._existingValues[key].includes(other.oldData[attribute]);
+            }
+        };
+        this.every.forEach(e => {
+            if(!match(e)) {
+                if(Array.isArray(attribute)) {
+                    const newObj = {};
+                    attribute.forEach(a => {
+                        newObj[a] = e.oldData[a];
+                    });
+                    this._existingValues[key].push(newObj);
+                }
+                else {
+                    this._existingValues[key].push(e.oldData[attribute]);
+                }
+            }
+        });
+
+        return this.existingValues(attribute);
+    }
+}
 
 export default ReadWriteObject;
