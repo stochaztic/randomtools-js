@@ -166,7 +166,7 @@ class ReadWriteObject {
                 value = byte & (1 << index);
             }
         });
-        if(value !== undefined) return value;
+        if(value !== undefined) return value ? true : false;
         throw new Error("No bit registered under that name.");
     }
 
