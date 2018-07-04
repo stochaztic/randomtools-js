@@ -26,10 +26,14 @@ class ReadWriteObject {
             throw new Error("Not initialized.");
         }
         if(this._every) {
-            return this._every.slice();
+            return this._every;
         }
         this._every = [];
         return this.every;
+    }
+
+    static get everyMutable() {
+        return this.every.slice();
     }
 
     get rank() {
@@ -45,7 +49,7 @@ class ReadWriteObject {
     }
 
     static get ranked() {
-        return this.every.sort((a, b) => {
+        return this.everyMutable.sort((a, b) => {
             return a.rank - b.rank;
         })
     }

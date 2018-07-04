@@ -21,6 +21,9 @@ class TableObject extends ReadWriteObject {
             this.parseTableSpecs();
         }
         this.getTableObjects();
+
+        // After initialization, every array should no longer change.
+        Object.freeze(this.every);
     }
 
     static parseTableSpecs() {
