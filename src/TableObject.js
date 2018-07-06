@@ -389,7 +389,7 @@ class TableObject extends ReadWriteObject {
 }
 
 TableObject.tableSpecs = {
-    text: "byte,1",
+    text: ["byte,1"],
     count: 0,
     pointer: 0x0,
     pointers: undefined,
