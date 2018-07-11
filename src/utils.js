@@ -151,12 +151,23 @@ const utils = {
 
     standardPatchLoader: function(patchArray) {
         const entries = [];
-        patchArray.forEach(line => {
-            if(line.trim().length === 0) return;
-            let [address, values] = line.trim().split(':').map(v => v.trim());
-            address = parseInt(address, 0x10);
-            values = values.split(' ').map(v => parseInt(v.trim(), 0x10));
-            entries.push({address: address, values: values});
+        patchArray.forEach(rawLine => {
+            const line = rawLine.split(";")[0].trim(); // Remove comments
+            if(line.length === 0) return;
+            const parts = line.split(':').map(v => v.trim()); // See if line contains address
+            if(parts.length === 1) {
+                // append to previous entry
+                const values = parts[0].split(' ').map(v => parseInt(v.trim(), 0x10));
+                console.assert(entries.length > 0);
+                entries[entries.length - 1].values.push(...values);
+            }
+            else {
+                // create new entry
+                let [address, values] = parts;
+                address = parseInt(address, 0x10);
+                values = values.split(' ').map(v => parseInt(v.trim(), 0x10));
+                entries.push({address: address, values: values});
+            }
         });
         return entries;
     },
