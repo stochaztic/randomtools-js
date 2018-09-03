@@ -122,7 +122,7 @@ class ReadWriteObject {
         if(!isNaN(index)) {
             return this.every[index];
         }
-        const objs = this.every.filter(o => o.name && o.name.contains(index));
+        const objs = this.every.filter(o => o.name && o.name.includes(index));
         if(objs.length > 1) {
             throw new Error("Too many matching objects.");
         }
