@@ -112,7 +112,7 @@ const utils = {
         if(text.length > 20) {
             text = text.substring(0, 19) + "?";
         }
-        const textArray = (new TextEncoder()).encode(text);
+        const textArray = text.split("").map(x => x.charCodeAt(0));
         if(textArray.length != 20) {
             throw new Error("Invalid characters in title text.");
         }
@@ -141,6 +141,7 @@ const utils = {
     },
     
     rewriteSnesMeta: function(context) {
+        context.hooks.message("Rewriting SNES metadata...");
         let degree = Math.floor((context.specs.randomDegree**0.5) * 100);
         if(degree >= 100) {
             degree = "!!";
