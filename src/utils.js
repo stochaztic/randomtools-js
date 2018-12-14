@@ -40,7 +40,7 @@ const utils = {
         const vals = [];
         while(value) {
             vals.push(value & 0xFF);
-            value = value >> 8;
+            value = value >>> 8;
         }
         if(vals.length > length) {
             throw new Error("Value length mismatch.");

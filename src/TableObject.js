@@ -139,7 +139,15 @@ class TableObject extends ReadWriteObject {
                 counter += 1
             */
         }
-        else if(this.tableSpecs.pointed && this.totalSize > 0) {
+        else if(this.tableSpecs.pointed) {
+            // Not compatible with Python implementation.
+            [...Array(this.tableSpecs.count).keys()].forEach(i => {
+                const pointerAddress = this.tableSpecs.pointer + (i * 4);
+                const pointer = utils.readMulti(this.context.rom, pointerAddress, 4) & 0x3FFFFF;
+                addObjects(1, pointer);
+            });
+        }
+        /*else if(this.tableSpecs.pointed && this.totalSize > 0) {
             throw new Error("Unimplemented.");
             /*
             size = objtype.specspointedsize
@@ -156,7 +164,7 @@ class TableObject extends ReadWriteObject {
                 add_objects(groupcount, groupindex=counter, p=subpointer)
                 pointer += size
                 counter += 1
-            */
+            
         }
         else if(this.tableSpecs.pointed && this.totalSize === 0) {
             throw new Error("Unimplemented.");
@@ -171,8 +179,8 @@ class TableObject extends ReadWriteObject {
                 subpointer2 = read_multi(f, size) + objtype.specspointedpointer
                 add_variable_object(subpointer, subpointer2)
                 counter += 1
-            */
-        }
+            
+        }*/
         else if(this.tableSpecs.delimit) {
             throw new Error("Unimplemented.");
             /*
@@ -224,12 +232,12 @@ class TableObject extends ReadWriteObject {
     }
 
     static writeAll() {
-        if(this.tableSpecs.pointedpoint1 || !(this.tableSpecs.grouped || this.tableSpecs.pointed || this.tableSpecs.delimit)) {
-            this.every.forEach(o => {
-                o.writeData();
-            })
-            return;
-        }
+        //if(this.tableSpecs.pointedpoint1 || !(this.tableSpecs.grouped || this.tableSpecs.pointed || this.tableSpecs.delimit)) {
+        this.every.forEach(o => {
+            o.writeData();
+        })
+        return;
+        /*}
         if(this.tableSpecs.grouped) {
             throw new Error("Unimplemented.");
             /*
@@ -244,7 +252,7 @@ class TableObject extends ReadWriteObject {
                         pointer += 1
                     for o in objs:
                         pointer = o.write_data(filename, pointer)
-            */
+            
             return;
         }
         if(this.tableSpecs.pointed && this.tableSpecs.delimit) {
@@ -276,7 +284,7 @@ class TableObject extends ReadWriteObject {
                      f.seek(cls.specspointer + (cls.specspointedsize * i))
                      write_multi(f, nullpointer-cls.specspointedpointer,
                                  length=cls.specspointedsize)
-             */
+             
             return;
         }
         if(this.tableSpecs.pointed) {
@@ -299,7 +307,7 @@ class TableObject extends ReadWriteObject {
                         pointedpointer = o.write_data(filename, pointedpointer)
                     f.seek(pointer + (i*size))
                     write_multi(f, masked, length=size)
-            */
+            
             return;
         }
         if(this.tableSpecs.delimit) {
@@ -317,9 +325,9 @@ class TableObject extends ReadWriteObject {
                     f.seek(pointer)
                     f.write(chr(cls.specsdelimitval))
                     pointer += 1
-            */
+            
             return;
-        }
+        }*/
     }
 
     writeData(pointer, syncing=false) {
