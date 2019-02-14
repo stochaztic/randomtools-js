@@ -370,6 +370,9 @@ class ReadWriteObject {
                 const obj = cls.get(index);
                 this.data[attribute] = obj.getSimilar().index;
             }
+            else if(typeof info === "function") {
+                this.data[attribute] = info(this, this.constructor.every);
+            }
             else {
                 let minmax = info;
                 if(!minmax || !minmax.length || !minmax.length == 2) {
