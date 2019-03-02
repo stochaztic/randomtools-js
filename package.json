@@ -1,13 +1,13 @@
 {
   "name": "randomtools-js",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Tools for randomizers",
   "main": "src/index.js",
   "keywords": [
     "randomizer",
     "game"
   ],
-  "author": "@pickfifteen",
+  "author": "@stochaztic",
   "private": true,
   "license": "GPL-3.0",
   "dependencies": {
