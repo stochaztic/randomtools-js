@@ -84,6 +84,24 @@ const utils = {
         throw new Error("Unimplemented");
     },
 
+    snesColorToRgb: function(data) {
+        // snes color format is RGB555; 0BBBBBGG GGGRRRRR
+        const color = {
+            r: (data % 32) * 8,
+            g: (Math.floor(data/32) % 32) * 8,
+            b: (Math.floor(data/1024) % 32) * 8,
+        };
+        // Stretch 0-248 range to full 0-255
+        Object.keys(color).forEach(key => {
+            color[key] = color[key] + (color[key] >> 5);
+        });
+        return color;
+    },
+
+    rgbToSnesColor: function(color) {
+        return Math.floor(color.r / 8) + (Math.floor(color.g / 8) * 32) + (Math.floor(color.b / 8) * 1024);
+    },
+
     calcFullChecksum: function(data, mask=0x80000000) {
         while(mask > data.length) {
             mask /= 2;
