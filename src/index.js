@@ -35,6 +35,8 @@ const RandomTools = {
         context.random = Random;
         context.random.seed(context.specs.seed);
 
+        context.specs.rarity = Array.from({length: 10}, () => context.random.random());
+
         context.hooks.prePatch && context.hooks.prePatch(context);
         utils.writePatches(context);
         context.hooks.postPatch && context.hooks.postPatch(context);
