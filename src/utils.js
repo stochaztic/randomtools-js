@@ -204,6 +204,18 @@ const utils = {
         })
     },
 
+    cleanupPatches: function(context) {
+        if(!context.patches) {
+            return;
+        }
+        context.hooks.message("Cleaning patches...");
+        context.patches.forEach(patch => {
+            if(!patch.cleanup) return;
+            context.hooks.message("Cleaning patch " + patch.name);
+            patch.cleanup(context);
+        })
+    },
+
     verifyPatches: function(context) {
         if(!context.patches) {
             return;

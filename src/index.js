@@ -76,15 +76,12 @@ const RandomTools = {
         })
         context.hooks.postSave && context.hooks.postSave(context);
     
+        utils.cleanupPatches(context);
         utils.verifyPatches(context);
         utils.rewriteSnesMeta(context);
         context.hooks.complete && context.hooks.complete(context);
         return context.rom;
     },
-
-    //ReadWriteObject: ReadWriteObject,
-    //TableObject: TableObject,
-    //utils: utils,
 }
 
 export default RandomTools;
