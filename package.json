@@ -1,6 +1,6 @@
 {
   "name": "randomtools-js",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Tools for randomizers",
   "main": "src/index.js",
   "keywords": [
@@ -9,6 +9,7 @@
   ],
   "author": "@stochaztic",
   "license": "GPL-3.0",
+  "type": "module",
   "dependencies": {
     "seedrandom": "^2.4.3"
   },

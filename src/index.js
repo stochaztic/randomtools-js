@@ -15,12 +15,14 @@ const RandomTools = {
 
         context.rom = new Uint8Array(context.rom);
         
-        if (context.rom.length % 0x100000 === 0x200) {
-            context.hooks.message("SNES header detected. Removing header from output file.");
-            context.rom = context.rom.slice(0x200);
-        }
-        if (context.rom.length % 0x100000 !== 0) {
-            throw new Error("Inappropriate file size for SNES rom file.");
+        if(context.specs.isSNES) {
+            if (context.rom.length % 0x100000 === 0x200) {
+                context.hooks.message("SNES header detected. Removing header from output file.");
+                context.rom = context.rom.slice(0x200);
+            }
+            if (context.rom.length % 0x100000 !== 0) {
+                throw new Error("Inappropriate file size for SNES rom file.");
+            }
         }
 
         context.hooks = context.hooks || {};
@@ -78,7 +80,11 @@ const RandomTools = {
     
         utils.cleanupPatches(context);
         utils.verifyPatches(context);
-        utils.rewriteSnesMeta(context);
+        
+        if(context.specs.isSNES) {
+            utils.rewriteSnesMeta(context);
+        }
+        
         context.hooks.complete && context.hooks.complete(context);
         return context.rom;
     },

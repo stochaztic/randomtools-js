@@ -144,7 +144,7 @@ const utils = {
         if(actualSize & 0x1FFFF) {
             context.hooks.message("WARNING: The rom is a strange size.");
         }
-        const mask = context.lorom ? 0x7FFF : 0xFFFF;
+        const mask = context.specs.lorom ? 0x7FFF : 0xFFFF;
         let expectedHeaderSize = 0x9;
         while(actualSize > (1024 << expectedHeaderSize)) {
             expectedHeaderSize += 1;
@@ -164,7 +164,7 @@ const utils = {
         if(degree >= 100) {
             degree = "!!";
         }
-        this.rewriteSnesTitle(context.rom, context.specs.title + " " + degree + " " + context.specs.seed, context.specs.version, context.lorom);
+        this.rewriteSnesTitle(context.rom, context.specs.title + " " + degree + " " + context.specs.seed, context.specs.version, context.specs.lorom);
         this.rewriteSnesChecksum(context);
     },
 
