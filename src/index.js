@@ -4,7 +4,7 @@ import TableObject from './TableObject.js';
 import utils from './utils.js';
 
 const RandomTools = {
-    execute: function(context) {
+    execute: async function(context) {
         // run_interface
         if(!context.rom) {
             throw new Error("No ROM provided.");
@@ -50,6 +50,12 @@ const RandomTools = {
             o.initialize(context);
         })
         context.hooks.postLoad && context.hooks.postLoad(context);
+        
+        for(const o of objects) {
+            if(o.prepare) {
+                await o.prepare();
+            }
+        }
 
         context.hooks.preRandomize && context.hooks.preRandomize(context);
         objects.forEach(o => {

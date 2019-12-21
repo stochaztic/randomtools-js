@@ -6,6 +6,10 @@ const utils = {
     intToBytes: function() {
         throw new Error("Unimplemented");
     },
+
+    range: function(size) {
+        return Array.from(Array(size).keys());
+    },
     /*,(value, length=2, reverse=True):
     # reverse=True means high-order byte first
     bs = []
