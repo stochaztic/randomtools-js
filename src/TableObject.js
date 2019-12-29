@@ -73,16 +73,11 @@ class TableObject extends ReadWriteObject {
             let p = pointer !== undefined ? pointer : cls.tableSpecs.pointer;
             let accumulatedSize = 0;
             [...Array(n).keys()].forEach(i => {
-                const obj = new cls({index: cls.every.length, groupIndex: groupIndex, pointer: p});
+                const obj = new cls({index: cls.every.length, groupIndex: groupIndex, pointer: p, variableSize: cls.tableSpecs.variableSize});
                 p += cls.totalSize;
                 accumulatedSize += cls.totalSize;
             })
             return accumulatedSize;
-        }
-        const addVariableObject = function(p1, p2) {
-            const size = p2 - p1;
-            const obj = new cls({index: cls.every.length, groupIndex: 0, pointer: p1, variableSize: size});
-            return size;
         }
 
         if(this.tableSpecs.pointers) {
