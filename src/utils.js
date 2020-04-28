@@ -226,6 +226,10 @@ const utils = {
         }
         context.hooks.message("Verifying patches...");
         context.patches.forEach(patch => {
+            if(patch.noVerify) {
+                context.hooks.message("Skip verifying patch " + patch.name);
+                return;
+            }
             context.hooks.message("Verifying patch " + patch.name);
             patch.entries.forEach(entry => {
                 var address = entry.address;
